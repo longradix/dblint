@@ -1,0 +1,47 @@
+-- Set up the rules, run metadata-rules and then data-rules
+set @schema = 'databasename';
+use @schema;
+source ~/dblint/dblint_rules.sql
+source ~/dblint/dblint_metadatarules.sql
+source ~/dblint/dblint_datarules.sql
+select table_name, table_type, coalesce(update_time, create_time) as `create / update`, table_rows as approx_rows, engine, table_comment from information_schema.tables where table_schema = @schema order by table_name;
+select routine_name, routine_type, coalesce(last_altered, created) as `create / update`, routine_comment from information_schema.routines where routine_schema = @schema order by routine_name;
+call dblint_rule00(@schema);
+call dblint_rule28(@schema);
+call dblint_rule29(@schema);  -- creates lots of output, ie too many false positives
+call dblint_rule31(@schema);  -- no output yet, as there are no primary keys
+call dblint_rule32(@schema);  -- ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'change <> exchange into @equalrows' at line 1
+call dblint_rule33(@schema);  -- ERROR 1172 (42000): Result consisted of more than one row
+call dblint_rule34(@schema);
+call dblint_rule35(@schema);
+call dblint_rule37(@schema);
+call dblint_rule38(@schema);
+call dblint_rule39(@schema);
+call dblint_rule42(@schema);
+call dblint_rule43(@schema);
+call dblint_rule44(@schema);
+call dblint_rule45(@schema);
+call dblint_rule59(@schema);
+select severity, r.* from dblint_results r inner join dblint_rules on r.id = dblint_rules.id;
+
+-- Unit testing
+source ~/dblint/dblint_rules.sql
+source ~/dblint/dblint_testcases.sql
+source ~/dblint/dblint_metadatarules.sql
+source ~/dblint/dblint_datarules.sql
+call dblint_rule28(@schema);
+call dblint_rule29(@schema);
+call dblint_rule31(@schema);
+call dblint_rule32(@schema);
+call dblint_rule33(@schema);
+call dblint_rule34(@schema);
+call dblint_rule35(@schema);
+call dblint_rule37(@schema);
+call dblint_rule38(@schema);
+call dblint_rule39(@schema);
+call dblint_rule42(@schema);
+call dblint_rule43(@schema);
+call dblint_rule44(@schema);
+call dblint_rule45(@schema);
+call dblint_rule59(@schema);
+select severity, r.* from dblint_results r inner join dblint_rules on r.id = dblint_rules.id;
