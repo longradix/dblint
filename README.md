@@ -5,7 +5,7 @@ Manually reviewing the quality of a database schema is time consuming and error-
 
 dblint has been implemented and evaluated on MySQL and its derivatives.
 
-Implemented from [DBLint (Aalborg Universitet)](https://projekter.aau.dk/projekter/en/studentthesis/dblint-a-tool-for-automated-analysis-of-database-design(f9f7ad9f-6043-4424-82e2-5e4a1d1ad875).html). From this source the numbering scheme has been reused as much as possible; not all rules are implemented.
+Implemented from [DBLint (Aalborg Universitet)](https://projekter.aau.dk/projekter/en/studentthesis/dblint-a-tool-for-automated-analysis-of-database-design(f9f7ad9f-6043-4424-82e2-5e4a1d1ad875).html), from which source the numbering scheme has been reused as much as possible. Not all rules are implemented.
 
 Read `dblint_overview` to see which rules are implemented. Use `dblint-script` to run all rules on the MySQL command line.
 
